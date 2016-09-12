@@ -1,0 +1,29 @@
+{
+  "name": "courses-app-telerik",
+  "description": "Mean stack app",
+  "main": "server.js",
+  "authors": [
+    "Dobromir Nikolov"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.0",
+    "angular": "^1.5.8",
+    "toastr": "^2.1.3",
+    "angular-resource": "^1.5.8",
+    "angular-route": "^1.5.8",
+    "bootstrap": "^3.3.7"
+  },
+  "resolutions": {
+    "jquery": "^3.1.0"
+  }
+}
