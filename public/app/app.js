@@ -6,12 +6,8 @@ app.config(function ($routeProvider, $locationProvider) {
 
     $routeProvider
         .when('/', {
-            templateUrl: '/partials/home',
+            templateUrl: '/partials/main/home',
             controller: 'MainController'
         });
 
-});
-
-app.controller('MainController', function ($scope) {
-    $scope.hello = 'Hi from angular';
 });

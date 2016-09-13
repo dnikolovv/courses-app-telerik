@@ -1,0 +1,14 @@
+.container
+    .jumbotron
+        h1 Courses app
+        h2 Sample app
+
+    .row
+        .col-md-6
+            .panel.panel-default
+                .panel-heading.text-center Featured
+                .panel-body(ng-include="'/partials/main/featured-courses'")
+        .col-md-6
+            .panel.panel-default
+                .panel-heading.text-center Latest
+                .panel-body(ng-include="'/partials/main/latest'")

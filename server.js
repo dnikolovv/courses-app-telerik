@@ -36,12 +36,12 @@ db.on('open', function (err) {
     console.log('Database running smoothly')
 });
 
-app.get('/partials/:partialName', function (request, response) {
-    response.render('partials/' + request.params.partialName);
+app.get('/partials/:partialArea/:partialName', function (request, response) {
+    response.render('partials/' + request.params.partialArea + '/' + request.params.partialName);
 });
 
 app.get('*', function (req, res) {
-    res.render('index', {message: messageFromDatabase});
+    res.render('index');
 });
 
 app.listen(port);
