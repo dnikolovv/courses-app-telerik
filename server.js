@@ -1,49 +1,13 @@
-var port = process.env.PORT || 3000;
-
+var express = require('express');
 var env = process.env.NODE_ENV || 'development';
 
-var express = require('express');
-var stylus = require('stylus');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-
 var app = express();
+var config = require('./server/config/config')[env];
 
-app.set('view engine', 'jade');
-app.set('views', __dirname + '/server/views');
-app.use(bodyParser());
-app.use(stylus.middleware(
-    {
-        src: __dirname + '/public',
-        compile: function (str, path) {
-            return stylus(str).set('filename', path);
-        }
-    }
-));
+require('./server/config/express')(app, config);
+require('./server/config/mongoose')(config);
+require('./server/config/routes')(app);
 
-app.use(express.static(__dirname + '/public'));
+app.listen(config.port);
 
-mongoose.connect('mongodb://localhost/CoursesApp');
-
-var db = mongoose.connection;
-
-db.on('open', function (err) {
-    if (err) {
-        console.log(err);
-        return;
-    }
-
-    console.log('Database running smoothly')
-});
-
-app.get('/partials/:partialArea/:partialName', function (request, response) {
-    response.render('../../public/app/' + request.params.partialArea + '/' + request.params.partialName);
-});
-
-app.get('*', function (req, res) {
-    res.render('index');
-});
-
-app.listen(port);
-
-console.log('Server running on port ' + port);
+console.log('Server running on port ' + config.port);
