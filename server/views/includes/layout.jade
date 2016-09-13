@@ -7,8 +7,19 @@ html
         link(rel="stylesheet", href="/css/style.css")
 
     body(ng-app = "app" ng-cloak)
-        h1 Hi from layout
-
+        header.nav.navbar-inverse.navbar-fixed-top
+            .container
+                .navbar-header
+                    a.navbar-brand(href="#/") Courses App
+                .navbar-collapse.collapse
+                    ul.nav.navbar-nav
+                        li
+                            a(href="/") Home
         block main-content
+
+        footer
+            hr
+            .text-center
+                p &copy Courses app
 
         include scripts

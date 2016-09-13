@@ -1,4 +1,4 @@
-var port = 3000;
+var port = process.env.PORT || 3000;
 
 var env = process.env.NODE_ENV || 'development';
 
@@ -34,23 +34,6 @@ db.on('open', function (err) {
     }
 
     console.log('Database running smoothly')
-});
-
-var messageSchema = mongoose.Schema({ message: String });
-
-var Message = mongoose.model('Message', messageSchema);
-var messageFromDatabase;
-
-Message.remove({}).exec(function (err) {
-    if (err) {
-        console.log('Messages cannot be cleared: ' + err);
-        return;
-    }
-
-    Message.create({ message: 'Hi from mongoose' })
-        .then(function (model) {
-            messageFromDatabase = model.message;
-        });
 });
 
 app.get('/partials/:partialName', function (request, response) {
