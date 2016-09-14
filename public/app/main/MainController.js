@@ -1,4 +1,5 @@
-app.controller('MainController', function ($scope) {
+app.controller('MainController', function ($scope, $http) {
+
     $scope.courses = [
         {name: 'C#', featured: true, published: new Date('10/5/2013')},
         {name: 'C++', featured: false, published: new Date('10/5/2013')},
