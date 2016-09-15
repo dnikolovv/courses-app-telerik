@@ -10,6 +10,6 @@ module.exports = function (app) {
     app.post('/logout', auth.logout);
 
     app.get('*', function (req, res) {
-        res.render('index');
+        res.render('index', { currentUser: req.user });
     });
 };

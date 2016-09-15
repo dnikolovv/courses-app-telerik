@@ -18,6 +18,8 @@ app.controller('LoginController', function ($scope, $location, notifier, auth, i
         auth.logout().then(function (success) {
             notifier.success('Successful logout.');
             $location.path('/');
+            $scope.user.username = '';
+            $scope.user.password = '';
         });
     };
 });
