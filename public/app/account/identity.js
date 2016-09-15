@@ -1,8 +1,18 @@
-app.factory('identity', function ($window) {
-   return {
-       currentUser: $window.bootstrappedUserObject,
-       isAuthenticated: function () {
-           return !!this.currentUser;
-       }
-   }
+app.factory('identity', function ($window, usersResource) {
+
+    var user;
+    if ($window.bootstrappedUserObject) {
+        user = new usersResource();
+        angular.extend(user, $window.bootstrappedUserObject);
+    }
+
+    return {
+        currentUser: user,
+        isAuthenticated: function () {
+             return !!this.currentUser;
+        },
+        isAuthorizedForRole: function (role) {
+            return !!this.currentUser && this.currentUser.roles.indexOf(role) > -1;
+        }
+    }
 });

@@ -1,6 +1,4 @@
 var mongoose = require('mongoose'),
-    passport = require('passport'),
-    LocalPassport = require('passport-local'),
     crypto = require('crypto');
 
 module.exports = function (config) {
@@ -22,7 +20,8 @@ module.exports = function (config) {
         firstName: String,
         lastName: String,
         salt: String,
-        hashedPassword: String
+        hashedPassword: String,
+        roles: [String]
     });
 
     userSchema.method({
@@ -53,60 +52,16 @@ module.exports = function (config) {
 
             salt = generateSalt();
             hashedPassword = hashPassword(salt, 'dnikolovv');
-            User.create({username: 'dnikolovv', firstName: 'Dobromir', lastName: 'Nikolov', salt: salt, hashedPassword: hashedPassword});
+            User.create({username: 'dnikolovv', firstName: 'Dobromir', lastName: 'Nikolov', salt: salt, hashedPassword: hashedPassword, roles: ['admin']});
             salt = generateSalt();
             hashedPassword = hashPassword(salt, 'stamatovv');
-            User.create({username: 'stamatovv', firstName: 'Stamat', lastName: 'Stamatovv', salt: salt, hashedPassword: hashedPassword});
+            User.create({username: 'stamatovv', firstName: 'Stamat', lastName: 'Stamatovv', salt: salt, hashedPassword: hashedPassword, roles: ['standard']});
             salt = generateSalt();
             hashedPassword = hashPassword(salt, 'chichoti');
             User.create({username: 'chichoti', firstName: 'Chicho', lastName: 'Ti', salt: salt, hashedPassword: hashedPassword});
 
             console.log('Added users to database.');
         }
-    });
-
-    passport.use(new LocalPassport(function (username, password, done) {
-
-        User.findOne({username: username}).exec(function (err, user) {
-
-            if (err) {
-                console.log('Error finding user with username ' + username + ': ' + err);
-                return;
-            }
-
-            if (user && user.authenticate(password)) {
-                return done(null, user);
-            }
-            else {
-                return done(null, false);
-            }
-        });
-
-    }));
-
-    passport.serializeUser(function (user, done) {
-
-        if (user) {
-            return done(null, user._id);
-        }
-    });
-    
-    passport.deserializeUser(function (id, done) {
-
-        User.findOne({_id: id}).exec(function (err, user) {
-
-            if (err) {
-                console.log('Error finding user with username ' + username + ': ' + err);
-                return;
-            }
-
-            if (user) {
-                return done(null, user);
-            }
-            else {
-                return done(null, false);
-            }
-        });
     });
 
     function generateSalt () {
