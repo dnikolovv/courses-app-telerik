@@ -1,1 +1,1 @@
-<div ng-repeat="course in courses | orderBy: 'published':true | limitTo: 10">{{ course.name }}</div>
+<div ng-repeat="course in courses | orderBy: 'published':true | limitTo: 10"><a href="#/courses/{{ course._id }}">{{ course.name }}</a></div>

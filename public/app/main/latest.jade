@@ -1,2 +1,2 @@
 div(ng-repeat="course in courses | orderBy: 'published':true | limitTo: 10")
-    | {{ course.name }}
+    a(href="#/courses/{{ course._id }}") {{ course.name }}

@@ -14,7 +14,7 @@ module.exports = function (app) {
     app.get('/api/users', auth.isInRole('admin'), UsersController.getAllUsers);
 
     app.get('/api/courses', CoursesController.getAllCourses);
-    app.get('/api/courses/:id', CoursesController.getAllCourses);
+    app.get('/api/courses/:id', CoursesController.getCourseById);
 
     app.post('/login', auth.login);
     app.post('/logout', auth.logout);

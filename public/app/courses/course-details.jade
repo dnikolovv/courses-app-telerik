@@ -1,0 +1,5 @@
+.container
+    h2 {{ course.name }}
+    p {{ course.published | date:'MM/dd/yyyy' }}
+    ul
+        li(ng-repeat="tag in course.tags") {{ tag }}
