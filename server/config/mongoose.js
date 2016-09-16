@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
     encryption = require('../utilities/encryption'),
-    user = require('../models/User');
+    user = require('../models/User'),
+    course = require('../models/Course');
 
 module.exports = function (config) {
     mongoose.connect(config.db);
@@ -17,4 +18,5 @@ module.exports = function (config) {
     });
 
     user.seedInitialUsers();
+    course.seedInitialCourses();
 };

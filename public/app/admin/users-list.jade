@@ -1,5 +1,9 @@
 .container(ng-controller="UsersListController")
     table.table
+        thead
+            tr
+                td First Name
+                td Last Name
         tr(ng-repeat="user in users")
             td {{ user.firstName }}
             td {{ user.lastName }}

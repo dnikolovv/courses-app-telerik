@@ -16,6 +16,24 @@ app.factory('auth', function ($http, $q, identity, usersResource) {
             return deferred.promise;
         },
 
+        update: function(user) {
+
+            var deferred = $q.defer();
+
+            var updatedUser = new usersResource(user);
+            updatedUser._id = identity.currentUser._id;
+
+            updatedUser.$update().then(function () {
+                identity.currentUser.firstName = updatedUser.firstName;
+                identity.currentUser.lastName = updatedUser.lastName;
+                deferred.resolve();
+            }, function (error) {
+                deferred.reject(error);
+            });
+
+            return deferred.promise;
+        },
+
         login: function(user){
             var deferred = $q.defer();
 

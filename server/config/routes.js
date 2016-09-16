@@ -1,6 +1,7 @@
 var auth = require('./auth'),
     User = require('mongoose').model('User'),
-    UsersController = require('../controllers/UsersController');
+    UsersController = require('../controllers/UsersController'),
+    CoursesController = require('../controllers/CoursesController');
 
 module.exports = function (app) {
 
@@ -9,7 +10,11 @@ module.exports = function (app) {
     });
 
     app.post('/api/users', UsersController.signUp);
+    app.put('/api/users', auth.isAuthenticated, UsersController.updateUser)
     app.get('/api/users', auth.isInRole('admin'), UsersController.getAllUsers);
+
+    app.get('/api/courses', CoursesController.getAllCourses);
+    app.get('/api/courses/:id', CoursesController.getAllCourses);
 
     app.post('/login', auth.login);
     app.post('/logout', auth.logout);
