@@ -1,3 +1,6 @@
-/**
- * Created by dnikolov2 on 9/16/2016.
- */
+app.controller('ProfileController', function ($scope, identity) {
+    $scope.user = {
+        firstName: identity.currentUser.firstName,
+        lastName: identity.currentUser.lastName
+    };
+});

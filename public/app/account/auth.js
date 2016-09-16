@@ -1,11 +1,25 @@
 app.factory('auth', function ($http, $q, identity, usersResource) {
     return {
-        login: function (user) {
 
+        signUp: function(user) {
+
+            var newUser = new usersResource(user);
             var deferred = $q.defer();
 
-            $http.post('/login', user).success(function (response) {
+            newUser.$save().then(function () {
+                identity.currentUser = newUser;
+                deferred.resolve();
+            }, function (error) {
+                deferred.reject(error);
+            });
 
+            return deferred.promise;
+        },
+
+        login: function(user){
+            var deferred = $q.defer();
+
+            $http.post('/login', user).success(function(response) {
                 if (response.success) {
                     var user = new usersResource();
                     angular.extend(user, response.user);
@@ -30,6 +44,14 @@ app.factory('auth', function ($http, $q, identity, usersResource) {
             });
 
             return deferred.promise;
+        },
+
+        isAuthenticated: function() {
+            if (identity.isAuthenticated()) {
+                return true;
+            }
+
+            return $q.reject('unauthorized');
         },
 
         isAuthorizedForRole: function(role) {

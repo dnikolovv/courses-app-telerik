@@ -1,5 +1,6 @@
 var auth = require('./auth'),
-    User = require('mongoose').model('User');
+    User = require('mongoose').model('User'),
+    UsersController = require('../controllers/UsersController');
 
 module.exports = function (app) {
 
@@ -7,16 +8,8 @@ module.exports = function (app) {
         response.render('../../public/app/' + request.params.partialArea + '/' + request.params.partialName);
     });
 
-    app.get('/api/users', auth.isInRole('admin'),
-        function(req, res) {
-            User.find({}).exec(function (err, users) {
-                if (err) {
-                    console.log("Couldn't obtain users: " + err);
-                }
-
-                res.send(users);
-            })
-        });
+    app.post('/api/users', UsersController.signUp);
+    app.get('/api/users', auth.isInRole('admin'), UsersController.getAllUsers);
 
     app.post('/login', auth.login);
     app.post('/logout', auth.logout);

@@ -3,10 +3,14 @@ var app = angular.module('app', ['ngResource', 'ngRoute'])
 
 app.config(function ($routeProvider, $locationProvider) {
 
+    // $locationProvider.html5Mode({
+    //     enabled: true,
+    //     requireBase: false
+    // });
+
     var routeUserChecks = {
         adminRole: {
             authenticate: function(auth) {
-                debugger;
                 return auth.isAuthorizedForRole('admin');
             }
         },
@@ -21,6 +25,15 @@ app.config(function ($routeProvider, $locationProvider) {
         .when('/', {
             templateUrl: '/partials/main/home',
             controller: 'MainController'
+        })
+        .when('/signup', {
+            templateUrl: '/partials/account/signup',
+            controller: 'SignUpController'
+        })
+        .when('/profile', {
+            templateUrl: '/partials/account/profile',
+            controller: 'ProfileController',
+            resolve: routeUserChecks.authenticated
         })
         .when('/admin/users', {
             templateUrl: 'partials/admin/users-list',
